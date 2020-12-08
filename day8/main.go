@@ -8,20 +8,21 @@ import (
 )
 
 func handleCodes(lines []string) (finished bool, acc int) {
-	var ins = make(map[int]bool, len(lines))
-	for i, _ := range lines {
-		ins[i] = false
+	var visited = make(map[int]bool, len(lines))
+	for i := range lines {
+		visited[i] = false
 	}
 	var step = 0
 	for {
-		if v, ok := ins[step]; ok && v {
+		if v, ok := visited[step]; ok && v {
 			break
 		}
 		if step >= len(lines) {
 			finished = true
 			break
 		}
-		ins[step] = true
+
+		visited[step] = true
 		str := lines[step]
 		ops := strings.Split(str, " ")
 
