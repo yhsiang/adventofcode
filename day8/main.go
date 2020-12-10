@@ -74,5 +74,6 @@ func main() {
 			break
 		}
 	}
-
+	// hint
+	// https://www.reddit.com/r/adventofcode/comments/k8z1fi/2020_day8_part_2_python_so_basically_my_program/
 }
