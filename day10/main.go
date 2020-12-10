@@ -88,6 +88,11 @@ func main() {
 			pow2 += 1
 		}
 	}
+	// [a,b] base 1 (2^0)
+	// [a,b,c] base 2 (2^1)
+	// [a,b,c,d] base 4 (2^2)
+	// [a,b,c,d,e] base 7 (1+2+4)
+	// [a,b,c,d,e,f] base 13 (2+4+7)
 
 	fmt.Println(pow2, pow7)
 	fmt.Println(int64(math.Pow(2, pow2) * math.Pow(7, pow7)))
