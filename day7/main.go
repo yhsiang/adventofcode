@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"regexp"
 	"strconv"
@@ -29,25 +30,40 @@ func NewBag(str string) *Bag {
 	s := strings.Split(str, "contain")
 	// fmt.Println(str, s)
 	r := re.FindSubmatch([]byte(strings.TrimSpace(s[0])))
-	if strings.TrimSpace(s[1]) == "no other bags." {
-		contains["other"] = 0
-	} else {
-		cc := strings.Split(strings.TrimSpace(s[1]), ",")
-		for _, c := range cc {
-			ss := re2.FindSubmatch([]byte(strings.TrimSpace(c)))
-			// fmt.Printf("%q", ss)
-			if len(ss) != 3 {
-				continue
-			}
-			i, _ := strconv.ParseInt(string(ss[1]), 10, 64)
-			contains[string(ss[2])] = int(i)
+	// if strings.TrimSpace(s[1]) == "no other bags." {
+	// 	contains["other"] = 0
+	// } else {
+	cc := strings.Split(strings.TrimSpace(s[1]), ",")
+	for _, c := range cc {
+		ss := re2.FindSubmatch([]byte(strings.TrimSpace(c)))
+		// fmt.Printf("%q", ss)
+		if len(ss) != 3 {
+			continue
 		}
+		i, _ := strconv.ParseInt(string(ss[1]), 10, 64)
+		contains[string(ss[2])] = int(i)
 	}
+	// }
 
 	return &Bag{
 		Color:    strings.TrimSpace(string(r[1])),
 		Contains: contains,
 	}
+}
+
+func sumBags(n int, key string, all map[string]Bag) int {
+	bag, ok := all[key]
+	if !ok {
+		return n
+	}
+
+	var sum int
+	for k, v := range bag.Contains {
+		s := sumBags(v, k, all)
+		sum += s
+	}
+
+	return n + n*sum
 }
 
 func main() {
@@ -112,4 +128,12 @@ func main() {
 		}
 	}
 
+	// fmt.Println(results)
+	// fmt.Println(sumBags(2, "wavy silver", results))
+	// fmt.Println(sumBags(1, "dark gray", results))
+	// fmt.Println(sumBags(1, "dull purple", results))
+	// fmt.Println(sumBags(5, "pale salmon", results))
+	// fmt.Println(sumBags(2, "plaid blue", results))
+	// fmt.Println(sumBags(2, "bright olive", results))
+	fmt.Println(sumBags(5, "faded gold", results) + sumBags(5, "pale green", results))
 }
