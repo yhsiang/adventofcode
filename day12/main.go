@@ -71,20 +71,49 @@ func (s *Ship) MoveByWaypoint(action string) {
 	case "W":
 		s.WaypointX -= num
 	case "L":
-		x := float64(s.WaypointX)*math.Cos(float64(num)*math.Pi/180) - float64(s.WaypointY)*math.Sin(float64(num)*math.Pi/180)
-		y := float64(s.WaypointY)*math.Cos(float64(num)*math.Pi/180) + float64(s.WaypointX)*math.Sin(float64(num)*math.Pi/180)
-		// fmt.Println(math.Round(x), math.Round(y))
-		s.WaypointX = int64(math.Round(x))
-		s.WaypointY = int64(math.Round(y))
+		// x := float64(s.WaypointX)*math.Cos(float64(num)*math.Pi/180) - float64(s.WaypointY)*math.Sin(float64(num)*math.Pi/180)
+		// y := float64(s.WaypointY)*math.Cos(float64(num)*math.Pi/180) + float64(s.WaypointX)*math.Sin(float64(num)*math.Pi/180)
+		// // fmt.Println(math.Round(x), math.Round(y))
+		// s.WaypointX = int64(math.Round(x))
+		// s.WaypointY = int64(math.Round(y))
+		originX := s.WaypointX
+		originY := s.WaypointY
+		if num == 90 {
+			s.WaypointX = -1 * originY
+			s.WaypointY = originX
+		}
+		if num == 180 {
+			s.WaypointX = -1 * s.WaypointX
+			s.WaypointY = -1 * s.WaypointY
+		}
+		if num == 270 {
+			s.WaypointX = originY
+			s.WaypointY = -1 * originX
+		}
 	case "R":
-		x := float64(s.WaypointX)*math.Cos(float64(num)*math.Pi/180) + float64(s.WaypointY)*math.Sin(float64(num)*math.Pi/180)
-		y := float64(s.WaypointY)*math.Cos(float64(num)*math.Pi/180) - float64(s.WaypointX)*math.Sin(float64(num)*math.Pi/180)
-		// fmt.Println(math.Round(x), math.Round(y))
-		s.WaypointX = int64(math.Round(x))
-		s.WaypointY = int64(math.Round(y))
+		// 	x := float64(s.WaypointX)*math.Cos(float64(num)*math.Pi/180) + float64(s.WaypointY)*math.Sin(float64(num)*math.Pi/180)
+		// 	y := float64(s.WaypointY)*math.Cos(float64(num)*math.Pi/180) - float64(s.WaypointX)*math.Sin(float64(num)*math.Pi/180)
+		// 	// fmt.Println(math.Round(x), math.Round(y))
+		// 	s.WaypointX = int64(math.Round(x))
+		// 	s.WaypointY = int64(math.Round(y))
+		originX := s.WaypointX
+		originY := s.WaypointY
+		if num == 90 {
+			s.WaypointX = originY
+			s.WaypointY = -1 * originX
+		}
+		if num == 180 {
+			s.WaypointX = -1 * s.WaypointX
+			s.WaypointY = -1 * s.WaypointY
+		}
+
+		if num == 270 {
+			s.WaypointX = -1 * originY
+			s.WaypointY = originX
+		}
 	}
 
-	fmt.Println(tmp[0], num, s)
+	// fmt.Println(tmp[0], num, s)
 }
 
 func main() {
