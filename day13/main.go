@@ -69,6 +69,7 @@ func solve(a, b, r int64) int64 {
 	return x
 }
 
+// crt is for Chinese Reminder Theorem
 func crt(mods []int64, reminders []int64) int64 {
 	var prod int64 = 1
 	var sum int64 = 0
