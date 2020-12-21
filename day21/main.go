@@ -150,15 +150,22 @@ func main() {
 		})
 	}
 	sort.Slice(dangerousSlice, func(i, j int) bool {
-		// wrong here, should be alphabetically
+		for k, s := range dangerousSlice[i].allergen {
+			if s == rune(dangerousSlice[j].allergen[k]) {
+				continue
+			}
+			return s < rune(dangerousSlice[j].allergen[k])
+		}
+
+		// not good here
 		return dangerousSlice[i].allergen[0] < dangerousSlice[j].allergen[0]
 	})
 	fmt.Println(dangerousSlice)
 
-	var str string
+	var str []string
 	for _, d := range dangerousSlice {
-		str += d.ingredient + ","
+		str = append(str, d.ingredient)
 	}
-	fmt.Println(str)
+	fmt.Println(strings.Join(str, ","))
 
 }
