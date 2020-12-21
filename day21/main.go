@@ -61,8 +61,8 @@ func main() {
 		}
 	}
 
+	// Calculate frequency
 	var allergens = make(map[string]map[string]int)
-
 	for _, food := range foods {
 		for _, a := range food.allergens {
 			v, ok := allergens[a]
@@ -80,23 +80,24 @@ func main() {
 	}
 	fmt.Println(allergens)
 
+	// convert to slice
 	var allergenSlice []map[string]int
 	for _, v := range allergens {
 		allergenSlice = append(allergenSlice, v)
 	}
 
+	// sort by frequency
 	sort.Slice(allergenSlice, func(i, j int) bool {
 		return len(allergenSlice[i]) > len(allergenSlice[j])
 	})
 	// fmt.Println(allergenSlice)
 
+	// find highest frequency and not in picked
 	picked := make(map[string]string)
 	for _, s := range allergenSlice {
-		// var integredientSlice []map[string]int
 		var times int
 		var allergen string
 		for k, v := range s {
-			// fmt.Println(k, v, times)
 			if _, ok := picked[k]; ok {
 				continue
 			}
@@ -112,9 +113,7 @@ func main() {
 					picked[allergen] = k
 				}
 			}
-
 		}
-
 	}
 	fmt.Println(picked)
 
@@ -129,7 +128,7 @@ func main() {
 	}
 	fmt.Println(zeroAllergens)
 
-	// Count
+	// Part1 Count
 	var count int
 	for _, z := range zeroAllergens {
 		for _, f := range foods {
@@ -142,6 +141,7 @@ func main() {
 	}
 	fmt.Println(count)
 
+	// Part2
 	var dangerousSlice []dangerous
 	for k, v := range picked {
 		dangerousSlice = append(dangerousSlice, dangerous{
@@ -150,7 +150,7 @@ func main() {
 		})
 	}
 	sort.Slice(dangerousSlice, func(i, j int) bool {
-		// wrong here
+		// wrong here, should be alphabetically
 		return dangerousSlice[i].allergen[0] < dangerousSlice[j].allergen[0]
 	})
 	fmt.Println(dangerousSlice)
