@@ -2,6 +2,12 @@
 
 My solutions are implemented with Golang.
 
+## 2021
+
+We talk about this every sunday at 20:00 (GMT+8). Next time is 12/05 20:00 (GMT +8)
+
+https://meet.jit.si/adventofcode2021 (in Mandarin)
+
 ## 2020
 
 ### Online Discussion

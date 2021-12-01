@@ -1,29 +1,13 @@
 package util
 
 import (
-	"fmt"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
 
 func Read(input string) []string {
-	dat, err := ioutil.ReadFile(input)
-	if err != nil {
-		panic(err)
-	}
-
-	data := strings.Split(string(dat), "\n")
+	data := strings.Split(string(input), "\n")
 	return data
-}
-
-func GetInput() string {
-	if len(os.Args) == 2 {
-		return fmt.Sprintf("./%s", os.Args[1])
-	}
-
-	return "./example"
 }
 
 func ToInt64(data []string) []int64 {

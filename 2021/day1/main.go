@@ -1,15 +1,20 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
+	"os"
 
 	util "github.com/yhsiang/adventofcode"
 )
 
-func main() {
-	data := util.Read(util.GetInput())
-	var nums = util.ToInt64(data)
+//go:embed example
+var example string
 
+//go:embed input
+var input string
+
+func count(nums []int64) int {
 	var increased int = 0
 	// fmt.Printf("%+v", nums)
 	for i, d := range nums {
@@ -20,7 +25,18 @@ func main() {
 			increased += 1
 		}
 	}
-	fmt.Printf("part1: %d\n", increased)
+	return increased
+}
+
+func main() {
+	var file = example
+	if len(os.Args) == 2 && os.Args[1] == "input" {
+		file = input
+	}
+
+	data := util.Read(file)
+	var nums = util.ToInt64(data)
+	fmt.Printf("part1: %d\n", count(nums))
 
 	var windows []int64
 	var three_nums []int64
@@ -33,16 +49,5 @@ func main() {
 		}
 	}
 	// fmt.Printf("%+v", three_nums)
-	var increased2 int = 0
-	// fmt.Printf("%+v", nums)
-	for i, d := range three_nums {
-		if i == 0 {
-			continue
-		}
-		if d-three_nums[i-1] > 0 {
-			increased2 += 1
-		}
-	}
-	fmt.Printf("part2: %d\n", increased2)
-
+	fmt.Printf("part2: %d\n", count(three_nums))
 }
