@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -20,4 +21,13 @@ func ToInt64(data []string) []int64 {
 		nums = append(nums, i)
 	}
 	return nums
+}
+
+func BinToInt64(data string) (num int64, err error) {
+	num, err = strconv.ParseInt(data, 2, 64)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return
 }
