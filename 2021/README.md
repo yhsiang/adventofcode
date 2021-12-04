@@ -1,7 +1,7 @@
 # Execution Guide
 
 ## Run with example
-go run main.go
+go run day1/main.go
 
 ## Run with input
-go run main.go input
+go run day1/main.go input

@@ -23,6 +23,15 @@ func ToInt64(data []string) []int64 {
 	return nums
 }
 
+func Int64(data string) (num int64, err error) {
+	num, err = strconv.ParseInt(data, 10, 64)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return
+}
+
 func BinToInt64(data string) (num int64, err error) {
 	num, err = strconv.ParseInt(data, 2, 64)
 	if err != nil {
