@@ -177,34 +177,30 @@ func main() {
 		cards = append(cards, initCard(c, i))
 	}
 
-	var bingo = false
-	var winner int
+	var lastCard *Card
 	var trigger string
 	for _, num := range numbers {
-		if bingo {
+		if lastCard != nil {
 			break
 		}
 		for _, card := range cards {
 			card.mark(num)
-		}
-		for j, card := range cards {
 			if card.isBingo() {
 				trigger = num
-				bingo = true
-				winner = j
+				lastCard = card
 				break
 			}
 		}
 	}
 
 	n, _ := util.Int64(trigger)
-
-	fmt.Printf("part1: %d\n", cards[winner].sum()*n)
+	fmt.Printf("part1: %d\n", lastCard.sum()*n)
 
 	for _, card := range cards {
 		card.reset()
 	}
-	var lastCard *Card
+
+	lastCard = nil
 	var removed []int
 	for _, num := range numbers {
 		if len(removed) == len(cards) {
@@ -215,11 +211,6 @@ func main() {
 				continue
 			}
 			card.mark(num)
-		}
-		for _, card := range cards {
-			if exist(removed, card.Order) {
-				continue
-			}
 			if card.isBingo() {
 				trigger = num
 				lastCard = card
