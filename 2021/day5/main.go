@@ -64,7 +64,6 @@ func initDiagram(input []string, max int) *Diagram {
 	var output [][]int
 	for i := 0; i < max; i++ {
 		var temp = []int{}
-		// fmt.Printf("%d", len(rows))
 		for j := 0; j < max; j++ {
 			temp = append(temp, 0)
 		}
@@ -86,78 +85,35 @@ func (d *Diagram) print() {
 	}
 }
 
+func signum(from int64, to int64) int {
+	if to-from > 0 {
+		return 1
+	} else {
+		return -1
+	}
+}
+
 func (d *Diagram) move(isPart2 bool) {
 	for _, line := range d.Lines {
 		if line.From.X == line.To.X {
-			if line.To.Y > line.From.Y {
-				for i := int(line.From.Y); i <= int(line.To.Y); i++ {
-					d.Map[i][int(line.From.X)] += 1
-				}
-			} else {
-				for i := int(line.To.Y); i <= int(line.From.Y); i++ {
-					d.Map[i][int(line.To.X)] += 1
-				}
+			dy := signum(line.From.Y, line.To.Y)
+			for i, j := line.From.Y, line.To.Y; i != j+int64(dy); i += int64(dy) {
+				d.Map[i][line.From.X] += 1
 			}
 		}
 		if line.From.Y == line.To.Y {
-			if line.To.X > line.From.X {
-				for i := int(line.From.X); i <= int(line.To.X); i++ {
-					d.Map[int(line.From.Y)][i] += 1
-				}
-			} else {
-				for i := int(line.To.X); i <= int(line.From.X); i++ {
-					d.Map[int(line.To.Y)][i] += 1
-				}
+			dx := signum(line.From.X, line.To.X)
+			for i, j := line.From.X, line.To.X; i != j+int64(dx); i += int64(dx) {
+				d.Map[line.From.Y][i] += 1
 			}
 		}
 		if isPart2 {
 			if line.From.X != line.To.X && line.From.Y != line.To.Y {
-				if line.From.X > line.To.X && line.From.Y < line.To.Y {
-					// fmt.Printf("%+v\n", line)
-					i := int(line.From.X)
-					j := int(line.From.Y)
-					for i >= int(line.To.X) && j <= int(line.To.Y) {
-						d.Map[j][i] += 1
-						i--
-						j++
-					}
+				dx := signum(line.From.X, line.To.X)
+				dy := signum(line.From.Y, line.To.Y)
+				for i, j := line.From.X, line.From.Y; i != line.To.X+int64(dx) && j != line.To.Y+int64(dy); i, j = i+int64(dx), j+int64(dy) {
+					d.Map[j][i] += 1
 				}
-
-				if line.From.X < line.To.X && line.From.Y < line.To.Y {
-					// fmt.Printf("%+v\n", line)
-					i := int(line.From.X)
-					j := int(line.From.Y)
-					for i <= int(line.To.X) && j <= int(line.To.Y) {
-						d.Map[j][i] += 1
-						i++
-						j++
-					}
-				}
-
-				// 6,4 -> 2,0
-				// 6,4 5,3 4,2 3,1 2,0
-				if line.From.X > line.To.X && line.From.Y > line.To.Y {
-					i := int(line.From.X)
-					j := int(line.From.Y)
-					for i >= int(line.To.X) && j >= int(line.To.Y) {
-						d.Map[j][i] += 1
-						i--
-						j--
-					}
-				}
-				// 5,5 -> 8,2
-				// 5,5 6,4 7,3, 8,2
-				if line.From.X < line.To.X && line.From.Y > line.To.Y {
-					// fmt.Printf("%+v\n", line)
-					i := int(line.From.X)
-					j := int(line.From.Y)
-					for i <= int(line.To.X) && j >= int(line.To.Y) {
-						d.Map[j][i] += 1
-						i++
-						j--
-					}
-				}
-
 			}
 		}
 	}
@@ -191,7 +147,6 @@ func main() {
 
 	diagram2 := initDiagram(data, max)
 	diagram2.move(true)
-	// diagram2.print()
-	fmt.Printf("part1: %d\n", diagram2.overlap())
+	fmt.Printf("part2: %d\n", diagram2.overlap())
 
 }
