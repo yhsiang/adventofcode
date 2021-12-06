@@ -16,7 +16,6 @@ var input string
 
 func count(nums []int64) int {
 	var increased int = 0
-	// fmt.Printf("%+v", nums)
 	for i, d := range nums {
 		if i == 0 {
 			continue
@@ -38,16 +37,11 @@ func main() {
 	var nums = util.ToInt64(data)
 	fmt.Printf("part1: %d\n", count(nums))
 
-	var windows []int64
+	var windows = append([]int64{0}, nums[0:2]...)
 	var three_nums []int64
-	for _, d := range nums {
-		windows = append(windows, d)
-		if len(windows) == 3 {
-			three_nums = append(three_nums, windows[0]+windows[1]+windows[2])
-			windows = windows[1:]
-			// fmt.Printf("%+v", windows)
-		}
+	for _, d := range nums[2:] {
+		windows = append(windows[1:], d)
+		three_nums = append(three_nums, util.Sum(windows))
 	}
-	// fmt.Printf("%+v", three_nums)
 	fmt.Printf("part2: %d\n", count(three_nums))
 }
