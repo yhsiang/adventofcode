@@ -40,3 +40,12 @@ func BinToInt64(data string) (num int64, err error) {
 	}
 	return
 }
+
+// TODO: generic
+func Sum(data []int64) int64 {
+	var sum int64 = 0
+	for _, d := range data {
+		sum += d
+	}
+	return sum
+}
