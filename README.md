@@ -6,7 +6,7 @@ My solutions are implemented with Golang.
 
 ### Online Discussion
 
-We talk about this every sunday at 20:00 (GMT+8). Next time is 12/05 20:00 (GMT +8)
+We talk about this every sunday at 20:00 (GMT+8). Next time is 12/12 20:00 (GMT +8)
 
 https://meet.jit.si/adventofcode2021 (in Mandarin)
 
@@ -19,7 +19,7 @@ https://meet.jit.si/adventofcode2021 (in Mandarin)
 
 ### Online Discussion
 
-We will talk about this every sunday at 20:00 (GMT+8). Next time is 12/27 20:00 (GMT +8)
+We will talk about this every sunday at 20:00 (GMT+8).
 
 https://meet.jit.si/adventofcode2020 (in Mandarin)
 
