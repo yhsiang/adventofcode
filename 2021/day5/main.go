@@ -52,26 +52,20 @@ func initLine(input string) *Line {
 }
 
 type Diagram struct {
-	Lines []*Line
-	Map   [][]int
+	Lines   []*Line
+	Map     [][]int
+	Hashmap map[string]int
 }
 
-func initDiagram(input []string, max int) *Diagram {
+func initDiagram(input []string) *Diagram {
 	var lines []*Line
 	for _, d := range input {
 		lines = append(lines, initLine(d))
 	}
-	var output [][]int
-	for i := 0; i < max; i++ {
-		var temp = []int{}
-		for j := 0; j < max; j++ {
-			temp = append(temp, 0)
-		}
-		output = append(output, temp)
-	}
+
 	return &Diagram{
-		Lines: lines,
-		Map:   output,
+		Lines:   lines,
+		Hashmap: make(map[string]int),
 	}
 }
 
@@ -98,13 +92,21 @@ func (d *Diagram) move(isPart2 bool) {
 		if line.From.X == line.To.X {
 			dy := signum(line.From.Y, line.To.Y)
 			for i, j := line.From.Y, line.To.Y; i != j+int64(dy); i += int64(dy) {
-				d.Map[i][line.From.X] += 1
+				coord := fmt.Sprintf("%d,%d", line.From.X, i)
+				if _, ok := d.Hashmap[coord]; !ok {
+					d.Hashmap[coord] = 0
+				}
+				d.Hashmap[coord] += 1
 			}
 		}
 		if line.From.Y == line.To.Y {
 			dx := signum(line.From.X, line.To.X)
 			for i, j := line.From.X, line.To.X; i != j+int64(dx); i += int64(dx) {
-				d.Map[line.From.Y][i] += 1
+				coord := fmt.Sprintf("%d,%d", i, line.From.Y)
+				if _, ok := d.Hashmap[coord]; !ok {
+					d.Hashmap[coord] = 0
+				}
+				d.Hashmap[coord] += 1
 			}
 		}
 		if isPart2 {
@@ -112,7 +114,11 @@ func (d *Diagram) move(isPart2 bool) {
 				dx := signum(line.From.X, line.To.X)
 				dy := signum(line.From.Y, line.To.Y)
 				for i, j := line.From.X, line.From.Y; i != line.To.X+int64(dx) && j != line.To.Y+int64(dy); i, j = i+int64(dx), j+int64(dy) {
-					d.Map[j][i] += 1
+					coord := fmt.Sprintf("%d,%d", i, j)
+					if _, ok := d.Hashmap[coord]; !ok {
+						d.Hashmap[coord] = 0
+					}
+					d.Hashmap[coord] += 1
 				}
 			}
 		}
@@ -121,11 +127,9 @@ func (d *Diagram) move(isPart2 bool) {
 
 func (d *Diagram) overlap() int {
 	var overlap = 0
-	for _, rows := range d.Map {
-		for _, col := range rows {
-			if col >= 2 {
-				overlap++
-			}
+	for _, d := range d.Hashmap {
+		if d >= 2 {
+			overlap++
 		}
 	}
 	return overlap
@@ -133,19 +137,17 @@ func (d *Diagram) overlap() int {
 
 func main() {
 	var file = example
-	var max = 10
 	if len(os.Args) == 2 && os.Args[1] == "input" {
 		file = input
-		max = 1000
 	}
 
 	data := util.Read(file)
 
-	diagram1 := initDiagram(data, max)
+	diagram1 := initDiagram(data)
 	diagram1.move(false)
 	fmt.Printf("part1: %d\n", diagram1.overlap())
 
-	diagram2 := initDiagram(data, max)
+	diagram2 := initDiagram(data)
 	diagram2.move(true)
 	fmt.Printf("part2: %d\n", diagram2.overlap())
 
