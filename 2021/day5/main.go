@@ -80,48 +80,36 @@ func (d *Diagram) print() {
 }
 
 func signum(from int64, to int64) int {
-	if to-from > 0 {
+	if from == to {
+		return 0
+	} else if to-from > 0 {
 		return 1
 	} else {
 		return -1
 	}
 }
 
-func (d *Diagram) move(isPart2 bool) {
+func (d *Diagram) draw(isPart2 bool) {
 	for _, line := range d.Lines {
-		if line.From.X == line.To.X {
-			dy := signum(line.From.Y, line.To.Y)
-			for i, j := line.From.Y, line.To.Y; i != j+int64(dy); i += int64(dy) {
-				coord := fmt.Sprintf("%d,%d", line.From.X, i)
-				if _, ok := d.Hashmap[coord]; !ok {
-					d.Hashmap[coord] = 0
-				}
-				d.Hashmap[coord] += 1
+		if !isPart2 {
+			if line.From.X == line.To.X || line.From.Y == line.To.Y {
+				d.realDraw(line)
 			}
+		} else {
+			d.realDraw(line)
 		}
-		if line.From.Y == line.To.Y {
-			dx := signum(line.From.X, line.To.X)
-			for i, j := line.From.X, line.To.X; i != j+int64(dx); i += int64(dx) {
-				coord := fmt.Sprintf("%d,%d", i, line.From.Y)
-				if _, ok := d.Hashmap[coord]; !ok {
-					d.Hashmap[coord] = 0
-				}
-				d.Hashmap[coord] += 1
-			}
+	}
+}
+
+func (d *Diagram) realDraw(line *Line) {
+	dx := signum(line.From.X, line.To.X)
+	dy := signum(line.From.Y, line.To.Y)
+	for i, j := line.From.X, line.From.Y; i != line.To.X+int64(dx) || j != line.To.Y+int64(dy); i, j = i+int64(dx), j+int64(dy) {
+		coord := fmt.Sprintf("%d,%d", i, j)
+		if _, ok := d.Hashmap[coord]; !ok {
+			d.Hashmap[coord] = 0
 		}
-		if isPart2 {
-			if line.From.X != line.To.X && line.From.Y != line.To.Y {
-				dx := signum(line.From.X, line.To.X)
-				dy := signum(line.From.Y, line.To.Y)
-				for i, j := line.From.X, line.From.Y; i != line.To.X+int64(dx) && j != line.To.Y+int64(dy); i, j = i+int64(dx), j+int64(dy) {
-					coord := fmt.Sprintf("%d,%d", i, j)
-					if _, ok := d.Hashmap[coord]; !ok {
-						d.Hashmap[coord] = 0
-					}
-					d.Hashmap[coord] += 1
-				}
-			}
-		}
+		d.Hashmap[coord] += 1
 	}
 }
 
@@ -144,11 +132,11 @@ func main() {
 	data := util.Read(file)
 
 	diagram1 := initDiagram(data)
-	diagram1.move(false)
+	diagram1.draw(false)
 	fmt.Printf("part1: %d\n", diagram1.overlap())
 
 	diagram2 := initDiagram(data)
-	diagram2.move(true)
+	diagram2.draw(true)
 	fmt.Printf("part2: %d\n", diagram2.overlap())
 
 }
