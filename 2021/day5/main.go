@@ -36,8 +36,6 @@ func initCoordinates(input string) Coordinate {
 type Line struct {
 	From Coordinate
 	To   Coordinate
-	// Direction string
-	// Moves     int64
 }
 
 func initLine(input string) *Line {
@@ -106,9 +104,6 @@ func (d *Diagram) realDraw(line *Line) {
 	dy := signum(line.From.Y, line.To.Y)
 	for i, j := line.From.X, line.From.Y; i != line.To.X+int64(dx) || j != line.To.Y+int64(dy); i, j = i+int64(dx), j+int64(dy) {
 		coord := fmt.Sprintf("%d,%d", i, j)
-		if _, ok := d.Hashmap[coord]; !ok {
-			d.Hashmap[coord] = 0
-		}
 		d.Hashmap[coord] += 1
 	}
 }
