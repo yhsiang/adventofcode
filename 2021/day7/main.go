@@ -53,21 +53,59 @@ func seq(num int) int {
 	return sum
 }
 
+func fastSeq(num int) int {
+	return num * (num + 1) / 2
+}
+
 func positions(input []int, max int, part2 bool) int {
 	var pos = []int{}
-	var seqs = seqArr(max)
+	// var seqs = seqArr(max)
 	for position := 0; position < max; position++ {
 		var fuels = []int{}
 		for i := range input {
 			p := abs(input[i] - position)
 			if part2 {
-				fuels = append(fuels, seqs[p])
+				fuels = append(fuels, fastSeq(p))
 			} else {
 				fuels = append(fuels, p)
 			}
 		}
 		pos = append(pos, util.SumInt(fuels))
 	}
+	min, _ := minMax(pos)
+	return min
+}
+
+func mostCommon(input []int) int {
+	var freq = make(map[int]int)
+	for _, d := range input {
+		freq[d] += 1
+	}
+	var maxKey int
+	var maxValue = 0
+	for key, value := range freq {
+		if value > maxValue {
+			maxValue = value
+			maxKey = key
+		}
+	}
+	return maxKey
+}
+
+func cal(input []int, max int, part2 bool) int {
+	var pos = []int{}
+	var seqs = seqArr(max)
+	target := mostCommon(input)
+	var fuels = []int{}
+	for i := range input {
+		p := abs(input[i] - target)
+		if part2 {
+			fuels = append(fuels, seqs[p])
+		} else {
+			fuels = append(fuels, p)
+		}
+	}
+	pos = append(pos, util.SumInt(fuels))
 	min, _ := minMax(pos)
 	return min
 }
@@ -79,6 +117,10 @@ func main() {
 	}
 	data := util.ToInt(strings.Split(file, ","))
 	_, max := minMax(data)
+
 	fmt.Printf("part1: %d\n", positions(data, max, false))
 	fmt.Printf("part2: %d\n", positions(data, max, true))
+
+	// fmt.Printf("part1: %d\n", cal(data, max, false))
+
 }
