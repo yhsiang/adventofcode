@@ -23,6 +23,18 @@ func ToInt64(data []string) []int64 {
 	return nums
 }
 
+func ToInt(data []string) []int {
+	var nums []int
+	for _, d := range data {
+		i, err := strconv.ParseInt(d, 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		nums = append(nums, int(i))
+	}
+	return nums
+}
+
 func Int64(data string) (num int64, err error) {
 	num, err = strconv.ParseInt(data, 10, 64)
 	if err != nil {
@@ -42,8 +54,16 @@ func BinToInt64(data string) (num int64, err error) {
 }
 
 // TODO: generic
-func Sum(data []int64) int64 {
+func SumInt64(data []int64) int64 {
 	var sum int64 = 0
+	for _, d := range data {
+		sum += d
+	}
+	return sum
+}
+
+func SumInt(data []int) int {
+	var sum int = 0
 	for _, d := range data {
 		sum += d
 	}
