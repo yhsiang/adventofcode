@@ -3,7 +3,6 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"math"
 	"os"
 	"strings"
 
@@ -15,24 +14,6 @@ var example string
 
 //go:embed input
 var input string
-
-func abs(x int) int {
-	return int(math.Abs(float64(x)))
-}
-
-func minMax(array []int) (int, int) {
-	var max int = array[0]
-	var min int = array[0]
-	for _, value := range array {
-		if max < value {
-			max = value
-		}
-		if min > value {
-			min = value
-		}
-	}
-	return min, max
-}
 
 // generate table first
 func seqArr(num int) []int {
@@ -63,7 +44,7 @@ func positions(input []int, max int, part2 bool) int {
 	for position := 0; position < max; position++ {
 		var fuels = []int{}
 		for i := range input {
-			p := abs(input[i] - position)
+			p := util.Abs(input[i] - position)
 			if part2 {
 				fuels = append(fuels, fastSeq(p))
 			} else {
@@ -72,10 +53,11 @@ func positions(input []int, max int, part2 bool) int {
 		}
 		pos = append(pos, util.SumInt(fuels))
 	}
-	min, _ := minMax(pos)
+	min, _ := util.MinMax(pos)
 	return min
 }
 
+// will be median in sorted array
 func mostCommon(input []int) int {
 	var freq = make(map[int]int)
 	for _, d := range input {
@@ -98,7 +80,7 @@ func cal(input []int, max int, part2 bool) int {
 	target := mostCommon(input)
 	var fuels = []int{}
 	for i := range input {
-		p := abs(input[i] - target)
+		p := util.Abs(input[i] - target)
 		if part2 {
 			fuels = append(fuels, seqs[p])
 		} else {
@@ -106,7 +88,7 @@ func cal(input []int, max int, part2 bool) int {
 		}
 	}
 	pos = append(pos, util.SumInt(fuels))
-	min, _ := minMax(pos)
+	min, _ := util.MinMax(pos)
 	return min
 }
 
@@ -116,7 +98,7 @@ func main() {
 		file = input
 	}
 	data := util.ToInt(strings.Split(file, ","))
-	_, max := minMax(data)
+	_, max := util.MinMax(data)
 
 	fmt.Printf("part1: %d\n", positions(data, max, false))
 	fmt.Printf("part2: %d\n", positions(data, max, true))

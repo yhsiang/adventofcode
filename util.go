@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -68,4 +69,22 @@ func SumInt(data []int) int {
 		sum += d
 	}
 	return sum
+}
+
+func Abs(x int) int {
+	return int(math.Abs(float64(x)))
+}
+
+func MinMax(array []int) (int, int) {
+	var max int = array[0]
+	var min int = array[0]
+	for _, value := range array {
+		if max < value {
+			max = value
+		}
+		if min > value {
+			min = value
+		}
+	}
+	return min, max
 }
