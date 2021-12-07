@@ -41,7 +41,7 @@ func main() {
 	var three_nums []int64
 	for _, d := range nums[2:] {
 		windows = append(windows[1:], d)
-		three_nums = append(three_nums, util.Sum(windows))
+		three_nums = append(three_nums, util.SumInt64(windows))
 	}
 	fmt.Printf("part2: %d\n", count(three_nums))
 }

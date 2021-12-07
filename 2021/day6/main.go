@@ -42,7 +42,7 @@ func fastSim(init_fishes []int64, round int) int64 {
 		fishes = append(fishes[1:], fishes[0])
 	}
 
-	return util.Sum(fishes)
+	return util.SumInt64(fishes)
 }
 
 func main() {
