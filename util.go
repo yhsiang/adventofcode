@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Read(input string) []string {
+func ByLine(input string) []string {
 	data := strings.Split(string(input), "\n")
 	return data
 }
