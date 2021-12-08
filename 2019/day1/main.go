@@ -33,7 +33,7 @@ func main() {
 	if len(os.Args) == 2 && os.Args[1] == "input" {
 		file = input
 	}
-	data := util.Read(file)
+	data := util.ByLine(file)
 	numbers := util.ToInt(data)
 	var sum int
 	for _, n := range numbers {

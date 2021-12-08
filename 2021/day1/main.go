@@ -33,7 +33,7 @@ func main() {
 		file = input
 	}
 
-	data := util.Read(file)
+	data := util.ByLine(file)
 	var nums = util.ToInt64(data)
 	fmt.Printf("part1: %d\n", count(nums))
 

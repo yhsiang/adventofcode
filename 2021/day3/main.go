@@ -87,7 +87,7 @@ func main() {
 		file = input
 	}
 
-	data := util.Read(file)
+	data := util.ByLine(file)
 	var rates = genRates(data)
 
 	var gamma = mostCommon(rates)

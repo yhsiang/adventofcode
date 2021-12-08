@@ -22,7 +22,7 @@ func main() {
 		file = input
 	}
 
-	data := util.Read(file)
+	data := util.ByLine(file)
 	// fmt.Print("%v", data)
 	var depth = 0
 	var position = 0

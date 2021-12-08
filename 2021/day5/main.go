@@ -124,7 +124,7 @@ func main() {
 		file = input
 	}
 
-	data := util.Read(file)
+	data := util.ByLine(file)
 
 	diagram1 := initDiagram(data)
 	diagram1.draw(false)
