@@ -71,6 +71,14 @@ func SumInt(data []int) int {
 	return sum
 }
 
+func MultiplyInt(data []int) int {
+	var sum int = 1
+	for _, d := range data {
+		sum *= d
+	}
+	return sum
+}
+
 func Abs(x int) int {
 	return int(math.Abs(float64(x)))
 }
