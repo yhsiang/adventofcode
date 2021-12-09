@@ -18,6 +18,7 @@ var input string
 
 type Map struct {
 	Numbers []int
+	HashMap map[int]int
 	rowNum  int
 	colNum  int
 }
@@ -25,11 +26,16 @@ type Map struct {
 func initMap(input string) *Map {
 	data := util.ByLine(input)
 	var output []int
+	var hashmap = make(map[int]int)
 	for _, d := range data {
 		output = append(output, util.ToInt(strings.Split(d, ""))...)
 	}
+	for i, d := range output {
+		hashmap[i] = d
+	}
 	return &Map{
 		Numbers: output,
+		HashMap: hashmap,
 		rowNum:  len(data[0]),
 		colNum:  len(data),
 	}
@@ -69,103 +75,78 @@ func (m *Map) findLowPoints() (int, []int) {
 	return riskLevels, lowPoints
 }
 
-func exist(input []int, value int) bool {
-	for _, i := range input {
-		if i == value {
-			return true
-		}
-	}
-	return false
+func exist(input map[int]struct{}, value int) bool {
+	_, ok := input[value]
+	return ok
 }
 
-func (m *Map) checkPoints(index int, finded []int) (output []int) {
+func (m *Map) checkPoints(index int, finded map[int]struct{}) map[int]struct{} {
+	output := make(map[int]struct{})
 	var coords = []int{
 		-1,
 		-1 * m.rowNum,
 		1,
 		1 * m.rowNum,
 	}
-
-	if index == 0 {
-		coords = []int{
-			1,
-			1 * m.rowNum,
-		}
-	} else if index == m.rowNum-1 {
-
-		coords = []int{
-			-1,
-			1 * m.rowNum,
-		}
-	} else if index == (m.colNum-1)*m.rowNum {
-		coords = []int{
-			1,
-			-1 * m.rowNum,
-		}
-	} else if index == (m.colNum*m.rowNum)-1 {
-		coords = []int{
-			-1,
-			-1 * m.rowNum,
-		}
-	} else if index > 0 && index < m.rowNum {
+	switch {
+	case index >= 0 && index <= m.rowNum-1:
 		coords = []int{
 			-1,
 			1,
 			1 * m.rowNum,
 		}
-	} else if index > 0 && index%m.rowNum == 0 {
+	case index >= (m.colNum-1)*m.rowNum && index <= m.colNum*m.rowNum-1:
+		coords = []int{
+			-1,
+			1,
+			-1 * m.rowNum,
+		}
+	case index%m.rowNum == 0:
 		coords = []int{
 			-1 * m.rowNum,
 			1,
 			1 * m.rowNum,
 		}
-	} else if index > 0 && index%m.rowNum == m.rowNum-1 {
+	case index%m.rowNum == m.rowNum-1:
 		coords = []int{
 			-1,
 			-1 * m.rowNum,
 			1 * m.rowNum,
-		}
-	} else if index > (m.colNum-1)*m.rowNum && index < (m.colNum*m.rowNum) {
-		coords = []int{
-			-1,
-			1,
-			-1 * m.rowNum,
 		}
 	}
 
 	for _, c := range coords {
 		coord := c + index
-		if !exist(finded, coord) {
-			output = append(output, c+index)
+		if !exist(finded, coord) && coord >= 0 && coord < len(m.Numbers) {
+			output[coord] = struct{}{}
 		}
 	}
-	return
+
+	return output
 }
 
 func (m *Map) findBasins(lowPoints []int) int {
-	var basins = make(map[int][]int)
-	var finded []int
+	var basins = make(map[int]map[int]struct{})
+	var finded = make(map[int]struct{})
 	for _, p := range lowPoints {
-		var basin []int
-		if !exist(basin, p) {
-			basin = append(basin, p)
-		}
-		finded = append(finded, p)
+		var basin = make(map[int]struct{})
+		basin[p] = struct{}{}
+		finded[p] = struct{}{}
 		points := m.checkPoints(p, finded)
 		for len(points) > 0 {
-			var temp []int
-			for _, d := range points {
-				finded = append(finded, d)
-				if m.Numbers[d] != 9 {
-					if !exist(basin, d) {
-						basin = append(basin, d)
+			var temp = make(map[int]struct{})
+			for d := range points {
+				finded[d] = struct{}{}
+				if v, ok := m.HashMap[d]; ok && v != 9 {
+					basin[d] = struct{}{}
+					for k := range m.checkPoints(d, finded) {
+						temp[k] = struct{}{}
 					}
-					temp = append(temp, m.checkPoints(d, finded)...)
 				}
 			}
 			points = temp
 		}
-		basins[p] = basin //uniq(basin)
+		basins[p] = basin
 	}
 
 	var basinLens []int
