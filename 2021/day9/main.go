@@ -59,28 +59,40 @@ var coords = [][]int{
 	{-1, 0},
 }
 
+func coord(input string) (x int, y int) {
+	strs := strings.Split(input, ",")
+	a, _ := util.Int64(strs[0])
+	b, _ := util.Int64(strs[1])
+	x = int(a)
+	y = int(b)
+	return
+}
+
 func (m *Map) lowPoints() (int, [][]int) {
 	var risk int
 	var points [][]int
-	for r := 0; r < m.Rows; r++ {
-		for c := 0; c < m.Cols; c++ {
-			current := m.HashMap[fmt.Sprintf("%d,%d", r, c)]
-			var low = true
-			for _, move := range coords {
-				coord := fmt.Sprintf("%d,%d", r+move[0], c+move[1])
-				v, ok := m.HashMap[coord]
-				if !ok {
-					continue
-				}
-				if current > v {
-					low = false
-					break
-				}
+	for k, current := range m.HashMap {
+		if current == 9 {
+			continue
+		}
+
+		r, c := coord(k)
+		var low = true
+		for _, move := range coords {
+			coord := fmt.Sprintf("%d,%d", r+move[0], c+move[1])
+			v, ok := m.HashMap[coord]
+			if !ok {
+				continue
 			}
-			if low && current != 9 {
-				risk += 1 + current
-				points = append(points, []int{r, c})
+			if current > v {
+				low = false
+				break
 			}
+		}
+
+		if low {
+			risk += 1 + current
+			points = append(points, []int{r, c})
 		}
 	}
 
@@ -110,10 +122,10 @@ func (m *Map) basins(points [][]int) int {
 		coord := fmt.Sprintf("%d,%d", p[0], p[1])
 		basin[coord] = struct{}{}
 		finded[coord] = struct{}{}
-		points := m.check(p, finded)
-		for len(points) > 0 {
-			target := points[0]
-			points = append(points[1:], m.check(target, finded)...)
+		checks := m.check(p, finded)
+		for len(checks) > 0 {
+			target := checks[0]
+			checks = append(checks[1:], m.check(target, finded)...)
 		}
 		basins[coord] = finded
 	}
