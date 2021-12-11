@@ -21,7 +21,7 @@ type Octopuses struct {
 	Cols     int
 }
 
-func initMeasurement(file string) *Octopuses {
+func initOctopuses(file string) *Octopuses {
 	lines := util.ByLine(file)
 	var energies = make(map[string]int)
 	for i, l := range lines {
@@ -36,7 +36,6 @@ func initMeasurement(file string) *Octopuses {
 		Rows:     len(lines),
 		Cols:     len(lines[0]),
 	}
-
 }
 
 var coords = [][]int{
@@ -119,8 +118,8 @@ func main() {
 		file = input
 	}
 
-	m := initMeasurement(file)
+	m := initOctopuses(file)
 	fmt.Printf("part1: %d\n", m.model(100, false))
-	m = initMeasurement(file)
+	m = initOctopuses(file)
 	fmt.Printf("part2: %d\n", m.model(100, true))
 }
