@@ -70,15 +70,13 @@ func (m *Octopuses) model(steps int, part2 bool) int {
 	for {
 		i++
 		var flashed = make(map[string]struct{})
-		for r := 0; r < m.Rows; r++ {
-			for c := 0; c < m.Cols; c++ {
-				coord := fmt.Sprintf("%d,%d", r, c)
-				m.Energies[coord] += 1
-				if m.Energies[coord] > 9 {
-					if _, ok := flashed[coord]; !ok {
-						flashed[coord] = struct{}{}
-						m.flash(r, c, flashed)
-					}
+		for coord := range m.Energies {
+			r, c := util.Coord(coord)
+			m.Energies[coord] += 1
+			if m.Energies[coord] > 9 {
+				if _, ok := flashed[coord]; !ok {
+					flashed[coord] = struct{}{}
+					m.flash(r, c, flashed)
 				}
 			}
 		}
