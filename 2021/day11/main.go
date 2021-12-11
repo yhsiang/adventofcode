@@ -65,9 +65,11 @@ func (m *Octopuses) flash(x int, y int, flashed map[string]struct{}) {
 	}
 }
 
-func (m *Octopuses) model(steps int) int {
+func (m *Octopuses) model(steps int, part2 bool) int {
 	var flashes int
-	for i := 0; i < steps; i++ {
+	var i int
+	for {
+		i++
 		var flashed = make(map[string]struct{})
 		for r := 0; r < m.Rows; r++ {
 			for c := 0; c < m.Cols; c++ {
@@ -81,48 +83,21 @@ func (m *Octopuses) model(steps int) int {
 				}
 			}
 		}
-
-		for k, energy := range m.Energies {
-			if energy > 9 {
-				flashes++
-				m.Energies[k] = 0
-			}
+		for k := range flashed {
+			m.Energies[k] = 0
 		}
-	}
-	return flashes
-}
-
-func (m *Octopuses) findSync() int {
-	var steps int
-	for {
-		var flashed = make(map[string]struct{})
-		for r := 0; r < m.Rows; r++ {
-			for c := 0; c < m.Cols; c++ {
-				coord := fmt.Sprintf("%d,%d", r, c)
-				energy := m.Energies[coord]
-				m.Energies[coord] += 1
-				if energy >= 9 {
-					if _, ok := flashed[coord]; !ok {
-						flashed[coord] = struct{}{}
-						m.flash(r, c, flashed)
-					}
-				}
-			}
-		}
-
-		var flashes int
-		for k, energy := range m.Energies {
-			if energy > 9 {
-				flashes++
-				m.Energies[k] = 0
-			}
-		}
-		if flashes == len(m.Energies) {
+		flashes += len(flashed)
+		if part2 && len(flashed) == len(m.Energies) {
 			break
 		}
-		steps++
+		if !part2 && i == steps {
+			break
+		}
 	}
-	return steps
+	if part2 {
+		return i
+	}
+	return flashes
 }
 
 func (m *Octopuses) print() {
@@ -145,7 +120,7 @@ func main() {
 	}
 
 	m := initMeasurement(file)
-	fmt.Printf("part1: %d\n", m.model(100))
+	fmt.Printf("part1: %d\n", m.model(100, false))
 	m = initMeasurement(file)
-	fmt.Printf("part2: %d\n", m.findSync()+1)
+	fmt.Printf("part2: %d\n", m.model(100, true))
 }
