@@ -15,6 +15,8 @@ https://meet.jit.si/adventofcode2021 (in Mandarin)
 
 * [12/05](https://www.dropbox.com/s/upsgrgidgncarpm/adventofcode2021%20on%202021-12-05%2012-59.mp4?dl=0)
 
+* [12/12](https://www.dropbox.com/s/9topfvioqehrtlj/adventofcode2021%20on%202021-12-12%2013-09.mp4?dl=0)
+
 ## 2020
 
 ### Online Discussion
