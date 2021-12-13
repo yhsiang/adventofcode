@@ -96,3 +96,12 @@ func MinMax(array []int) (int, int) {
 	}
 	return min, max
 }
+
+func Coord(input string) (x int, y int) {
+	strs := strings.Split(input, ",")
+	a, _ := Int64(strs[0])
+	b, _ := Int64(strs[1])
+	x = int(a)
+	y = int(b)
+	return
+}
