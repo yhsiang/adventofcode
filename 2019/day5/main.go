@@ -39,35 +39,32 @@ func intcode(data []int, input int, part2 bool) string {
 	copy(program, data)
 	var next int
 	var output string
+loop:
 	for next < len(data) {
 		code := program[next]
 		op, modes := getOpCode(code)
-		if op == 99 {
-			break
-		}
-		if op == 1 {
+		switch {
+		case op == 99:
+			// next = len(data) + 1
+			break loop
+		case op == 1:
 			c := program[next+3]
 			program[c] = getP(0, modes, next+1, program) + getP(1, modes, next+2, program)
 			next += 4
-		}
-		if op == 2 {
+		case op == 2:
 			c := program[next+3]
 			program[c] = getP(0, modes, next+1, program) * getP(1, modes, next+2, program)
 			next += 4
-		}
-		if op == 3 {
+		case op == 3:
 			// input
 			a := program[next+1]
 			program[a] = input
 			next += 2
-		}
-		if op == 4 {
+		case op == 4:
 			//output
 			output += fmt.Sprintf("%d", getP(0, modes, next+1, program))
 			next += 2
-		}
-
-		if part2 && op == 5 {
+		case part2 && op == 5:
 			// jump-if-true
 			if getP(0, modes, next+1, program) != 0 {
 				next = getP(1, modes, next+2, program)
@@ -75,16 +72,14 @@ func intcode(data []int, input int, part2 bool) string {
 			} else {
 				next += 3
 			}
-		}
-		if part2 && op == 6 {
+		case part2 && op == 6:
 			// jump-if-false
 			if getP(0, modes, next+1, program) == 0 {
 				next = getP(1, modes, next+2, program)
 			} else {
 				next += 3
 			}
-		}
-		if part2 && op == 7 {
+		case part2 && op == 7:
 			// less than
 			c := program[next+3]
 			if getP(0, modes, next+1, program) < getP(1, modes, next+2, program) {
@@ -92,10 +87,8 @@ func intcode(data []int, input int, part2 bool) string {
 			} else {
 				program[c] = 0
 			}
-
 			next += 4
-		}
-		if part2 && op == 8 {
+		case part2 && op == 8:
 			// equals
 			c := program[next+3]
 			if getP(0, modes, next+1, program) == getP(1, modes, next+2, program) {
@@ -103,7 +96,6 @@ func intcode(data []int, input int, part2 bool) string {
 			} else {
 				program[c] = 0
 			}
-
 			next += 4
 		}
 	}
