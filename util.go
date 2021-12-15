@@ -45,6 +45,11 @@ func Int64(data string) (num int64, err error) {
 	return
 }
 
+func Int(data string) (int, error) {
+	num, err := strconv.ParseInt(data, 10, 64)
+	return int(num), err
+}
+
 func BinToInt64(data string) (num int64, err error) {
 	num, err = strconv.ParseInt(data, 2, 64)
 	if err != nil {
