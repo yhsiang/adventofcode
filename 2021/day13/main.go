@@ -82,8 +82,6 @@ func main() {
 		file = input
 	}
 
-	_ = file
-
 	inputs := strings.Split(file, "\n\n")
 	paper := initPaper(inputs[0])
 	actions := util.ByLine(inputs[1])
