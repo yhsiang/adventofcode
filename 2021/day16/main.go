@@ -34,7 +34,7 @@ type Packet struct {
 	Length  int
 
 	// operator
-	LengthTypeId  int
+	LengthTypeId  int // 0: literal, 1: total length in bits, 2: number of sub-packets
 	LengthTypeVal int
 }
 
