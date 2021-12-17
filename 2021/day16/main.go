@@ -284,8 +284,10 @@ func print(packets []*Packet) {
 	}
 }
 
+var Versions int
+
 func decode(data string, n int) (int, int) {
-	_ = data[n : n+3]
+	Versions += parse(data[n : n+3])
 	type_ := parse(data[n+3 : n+6])
 	i := string(data[n+6])
 
@@ -414,7 +416,8 @@ func main() {
 	}
 	fmt.Printf("part1: %d\n", sum)
 	fmt.Printf("part2: %d\n", prefixEval(packets))
-
-	// _, value := decode(bs, 0)
-	// fmt.Printf("part2: %d\n", value)
+	fmt.Println("recursion")
+	_, value := decode(bs, 0)
+	fmt.Printf("part1: %d\n", Versions)
+	fmt.Printf("part2: %d\n", value)
 }
