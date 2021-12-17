@@ -62,24 +62,18 @@ func decodePacket(data string) (*Packet, string) {
 		i := string(data[6])
 		switch i {
 		case "0":
-			x := 7
-			y := x + 15
-			remain = data[y:]
+			remain = data[22:]
 			packet.LengthTypeId = 1
 			packet.Length = 22
 			packet.LengthTypeVal = parse(data[7:22])
 		case "1":
-			x := 7
-			y := x + 11
-			remain = data[y:]
+			remain = data[18:]
 			packet.LengthTypeId = 2
 			packet.Length = 18
 			packet.LengthTypeVal = parse(data[7:18])
 		}
 	}
-
 	return packet, remain
-
 }
 
 type Stack []*Packet
@@ -165,187 +159,110 @@ func maxPackets(ps []*Packet) *Packet {
 	}
 }
 
+type CalFunc func([]*Packet) *Packet
+type ExamineFunc func(*Packet, *Packet, *Packet) *Packet
+
+func cal(p *Packet, stack *Stack, f CalFunc) *Stack {
+	var o *Packet
+	var nums []*Packet
+	if p.LengthTypeId == 1 {
+		var length int
+		for length < p.LengthTypeVal {
+			n, ok := stack.pop()
+			if ok {
+				nums = append(nums, n)
+				length += n.Length
+			}
+
+		}
+	}
+
+	if p.LengthTypeId == 2 {
+		for i := 0; i < p.LengthTypeVal; i++ {
+			n, ok := stack.pop()
+			if ok {
+				nums = append(nums, n)
+			}
+		}
+	}
+
+	o = f(nums)
+	o.Length += p.Length
+	stack.push(o)
+	return stack
+}
+
+func greater(a, b, p *Packet) *Packet {
+	if a.Value > b.Value {
+		return &Packet{
+			Length: a.Length + b.Length + p.Length,
+			Value:  1,
+		}
+	}
+	return &Packet{
+		Length: a.Length + b.Length + p.Length,
+		Value:  0,
+	}
+}
+
+func less(a, b, p *Packet) *Packet {
+	if a.Value < b.Value {
+		return &Packet{
+			Length: a.Length + b.Length + p.Length,
+			Value:  1,
+		}
+	}
+	return &Packet{
+		Length: a.Length + b.Length + p.Length,
+		Value:  0,
+	}
+}
+
+func equal(a, b, p *Packet) *Packet {
+	if a.Value == b.Value {
+		return &Packet{
+			Length: a.Length + b.Length + p.Length,
+			Value:  1,
+		}
+	}
+	return &Packet{
+		Length: a.Length + b.Length + p.Length,
+		Value:  0,
+	}
+}
+
+func compare(p *Packet, stack *Stack, f ExamineFunc) *Stack {
+	a, _ := stack.pop()
+	b, _ := stack.pop()
+	o := f(a, b, p)
+	stack.push(o)
+	return stack
+}
+
 // eq + 1 3 * 2 2
-func count(input []*Packet) int {
+func prefixEval(input []*Packet) int {
 	pointer := len(input) - 1
 	var stack = &Stack{}
 	for pointer >= 0 {
 		p := input[pointer]
-		// fmt.Printf("%d, %+v\n", pointer, p)
-		// stack.print()
-		// fmt.Println()
 		if p.Type_ == 4 {
 			stack.push(p)
-			// stack = append(stack, p.Value)
 		} else { // operator
-			if p.Type_ == 0 {
-				if p.LengthTypeId == 1 {
-					var nums []*Packet
-					var length int
-					for length < p.LengthTypeVal {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-							length += n.Length
-						}
-
-					}
-					sum := sumPackets(nums)
-					sum.Length += p.Length
-					stack.push(sum)
-				}
-
-				if p.LengthTypeId == 2 {
-					var nums []*Packet
-					for i := 0; i < p.LengthTypeVal; i++ {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-						}
-					}
-					sum := sumPackets(nums)
-					sum.Length += p.Length
-					stack.push(sum)
-				}
-			}
-
-			if p.Type_ == 1 {
-				if p.LengthTypeId == 1 {
-					var nums []*Packet
-					var length int
-					for length < p.LengthTypeVal {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-							length += n.Length
-						}
-					}
-					prod := prodPackets(nums)
-					prod.Length += p.Length
-					stack.push(prod)
-				}
-
-				if p.LengthTypeId == 2 {
-					var nums []*Packet
-					for i := 0; i < p.LengthTypeVal; i++ {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-						}
-					}
-					prod := prodPackets(nums)
-					prod.Length += p.Length
-					stack.push(prod)
-				}
-			}
-
-			if p.Type_ == 2 {
-				if p.LengthTypeId == 1 {
-					var nums []*Packet
-					var length int
-					for length < p.LengthTypeVal {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-							length += n.Length
-						}
-
-					}
-					min := minPackets(nums)
-					min.Length += p.Length
-					stack.push(min)
-				}
-
-				if p.LengthTypeId == 2 {
-					var nums []*Packet
-					for i := 0; i < p.LengthTypeVal; i++ {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-						}
-					}
-					min := minPackets(nums)
-					min.Length += p.Length
-					stack.push(min)
-				}
-			}
-
-			if p.Type_ == 3 {
-				if p.LengthTypeId == 1 {
-					var nums []*Packet
-					var length int
-					for length < p.LengthTypeVal {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-							length += n.Length
-						}
-					}
-					max := maxPackets(nums)
-					max.Length += p.Length
-					stack.push(max)
-				}
-
-				if p.LengthTypeId == 2 {
-					var nums []*Packet
-					for i := 0; i < p.LengthTypeVal; i++ {
-						n, ok := stack.pop()
-						if ok {
-							nums = append(nums, n)
-						}
-					}
-					max := maxPackets(nums)
-					max.Length += p.Length
-					stack.push(max)
-				}
-			}
-
-			if p.Type_ == 5 {
-				a, _ := stack.pop()
-				b, _ := stack.pop()
-				if a.Value > b.Value {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  1,
-					})
-				} else {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  0,
-					})
-				}
-			}
-
-			if p.Type_ == 6 {
-				a, _ := stack.pop()
-				b, _ := stack.pop()
-				if a.Value < b.Value {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  1,
-					})
-				} else {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  0,
-					})
-				}
-			}
-
-			if p.Type_ == 7 {
-				a, _ := stack.pop()
-				b, _ := stack.pop()
-				if a.Value == b.Value {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  1,
-					})
-				} else {
-					stack.push(&Packet{
-						Length: a.Length + b.Length + p.Length,
-						Value:  0,
-					})
-				}
+			switch p.Type_ {
+			case 0:
+				stack = cal(p, stack, sumPackets)
+			case 1:
+				stack = cal(p, stack, prodPackets)
+			case 2:
+				stack = cal(p, stack, minPackets)
+			case 3:
+				stack = cal(p, stack, maxPackets)
+			case 5:
+				stack = compare(p, stack, greater)
+			case 6:
+				stack = compare(p, stack, less)
+			case 7:
+				stack = compare(p, stack, equal)
 			}
 		}
 		pointer--
@@ -353,7 +270,6 @@ func count(input []*Packet) int {
 
 	p, _ := stack.pop()
 	return p.Value
-	// stack.print()
 }
 
 func (s *Stack) print() {
@@ -446,36 +362,28 @@ func max(vals []int) int {
 }
 
 func operate(vals []int, type_ int) (returnValue int) {
-	if type_ == 0 {
+	switch type_ {
+	case 0:
 		returnValue = sum(vals)
-	}
-
-	if type_ == 1 {
+	case 1:
 		returnValue = mul(vals)
-	}
-
-	if type_ == 2 {
+	case 2:
 		returnValue = min(vals)
-	}
-	if type_ == 3 {
+	case 3:
 		returnValue = max(vals)
-	}
-	if type_ == 5 {
+	case 5:
 		if vals[0] > vals[1] {
 			returnValue = 1
 		} else {
 			returnValue = 0
 		}
-	}
-	if type_ == 6 {
+	case 6:
 		if vals[0] < vals[1] {
 			returnValue = 1
 		} else {
 			returnValue = 0
 		}
-	}
-
-	if type_ == 7 {
+	case 7:
 		if vals[0] == vals[1] {
 			returnValue = 1
 		} else {
@@ -505,7 +413,7 @@ func main() {
 		}
 	}
 	fmt.Printf("part1: %d\n", sum)
-	fmt.Printf("part2: %d\n", count(packets))
+	fmt.Printf("part2: %d\n", prefixEval(packets))
 
 	// _, value := decode(bs, 0)
 	// fmt.Printf("part2: %d\n", value)
