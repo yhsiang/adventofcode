@@ -110,3 +110,10 @@ func Coord(input string) (x int, y int) {
 	y = int(b)
 	return
 }
+
+func Max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
