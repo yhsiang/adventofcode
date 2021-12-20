@@ -50,6 +50,14 @@ func Int(data string) (int, error) {
 	return int(num), err
 }
 
+func BinToInt(data string) (int, error) {
+	num, err := strconv.ParseInt(data, 2, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return int(num), err
+}
+
 func BinToInt64(data string) (num int64, err error) {
 	num, err = strconv.ParseInt(data, 2, 64)
 	if err != nil {
@@ -109,6 +117,37 @@ func Coord(input string) (x int, y int) {
 	x = int(a)
 	y = int(b)
 	return
+}
+
+func Coord3d(input string) (x int, y int, z int) {
+	strs := strings.Split(input, ",")
+	a, _ := Int64(strs[0])
+	b, _ := Int64(strs[1])
+	c, _ := Int64(strs[2])
+	x = int(a)
+	y = int(b)
+	z = int(c)
+	return
+}
+
+func Coord3dSum(a string, b string) string {
+	x1, y1, z1 := Coord3d(a)
+	x2, y2, z2 := Coord3d(b)
+
+	return fmt.Sprintf("%d,%d,%d", x1+x2, y1+y2, z1+z2)
+}
+
+func Coord3dSub(a string, b string) string {
+	x1, y1, z1 := Coord3d(a)
+	x2, y2, z2 := Coord3d(b)
+
+	return fmt.Sprintf("%d,%d,%d", x1-x2, y1-y2, z1-z2)
+}
+
+func ManhattanDist(a, b string) int {
+	x1, y1, z1 := Coord3d(a)
+	x2, y2, z2 := Coord3d(b)
+	return Abs(x1-x2) + Abs(y1-y2) + Abs(z1-z2)
 }
 
 func Max(x, y int) int {
