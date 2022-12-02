@@ -2,11 +2,18 @@
 
 My solutions are implemented with Golang.
 
-## 2021 Online Discussion Records
+## 2022 Online Discussion Records
 
 We talk about this every sunday at 20:00 (GMT+8).
 
-https://meet.jit.si/adventofcode2021 (in Mandarin)
+https://meet.jit.si/adventofcode2022 (in Mandarin)
+
+* 12/04
+* 12/11
+* 12/18
+* 12/25
+
+## 2021 Online Discussion Records
 
 * [12/05](https://www.dropbox.com/s/upsgrgidgncarpm/adventofcode2021%20on%202021-12-05%2012-59.mp4?dl=0)
 * [12/12](https://www.dropbox.com/s/9topfvioqehrtlj/adventofcode2021%20on%202021-12-12%2013-09.mp4?dl=0)
