@@ -19,7 +19,7 @@ var input string
 type Node struct {
 	Size     int
 	Parent   *Node
-	Children map[string]*Node
+	Children []*Node
 }
 
 type Nodes []*Node
@@ -50,7 +50,7 @@ func main() {
 	root := &Node{
 		Size:     0,
 		Parent:   nil,
-		Children: make(map[string]*Node, 0),
+		Children: make([]*Node, 0),
 	}
 	current := root
 
@@ -64,21 +64,20 @@ func main() {
 				}
 				// fmt.Printf("%s %+v\n", input, current)
 				if input[5:] != ".." {
-					current = current.Children[input[5:]]
+					child := &Node{
+						Size:     0,
+						Children: make([]*Node, 0),
+						Parent:   current,
+					}
+					current.Children = append(current.Children, child)
+					current = child
 				} else {
 					current = current.Parent
 				}
 			case "ls":
 			}
 		} else {
-			if input[0:3] == "dir" {
-				dir := Node{
-					Size:     0,
-					Children: make(map[string]*Node),
-					Parent:   current,
-				}
-				current.Children[input[4:]] = &dir
-			} else {
+			if input[0:3] != "dir" {
 				file := strings.Split(input, " ")
 				size, _ := util.Int(file[0])
 				current.Size += size
