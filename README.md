@@ -9,7 +9,7 @@ We talk about this every sunday at 20:00 (GMT+8).
 https://meet.jit.si/adventofcode2022 (in Mandarin)
 
 * [12/04](https://www.dropbox.com/s/p8isc0kl4eswbcx/adventofcode2022_2022-12-04T12_31_18.334Z.webm?dl=0)
-* 12/11
+* [12/11](https://www.dropbox.com/s/h4qxn2nbjadaef8/adventofcode2022_2022-12-11T13_18_04.172Z.webm?dl=0)
 * 12/18
 * 12/25
 
