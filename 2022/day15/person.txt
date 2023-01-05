@@ -1,0 +1,49 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.7
+-- Dumped by pg_dump version 14.5 (Homebrew)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: dbadmin
+--
+
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('61d68490-adb4-4421-9696-2e4fc447cdde', 20, '2022-12-02 06:29:36.819', NULL, false, false, NULL, '04606317e4d1af6f6f6e929c5e8ed2714b7256d10f58a5d5f0ad69c480c06269a298521e930a6bf08578210b4c3a295df2a1e7a742a4c1890c0a9052004ab89bc4', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('8751a429-4c06-4278-8cdd-c07d3fe382ca', 20, '2022-12-02 06:49:16.061', NULL, false, false, NULL, '04a29df600969b791f85512306a2e91e2d9c78fba196a5250854c62bdd6e8269bf3e4b2665c90dc0825a3d7132486e4696d78cd315f56015b225828a0419f15adb', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('1610f458-61fb-4ab2-b347-762756ecd5c9', 20, '2022-11-30 08:08:02.323', NULL, false, false, NULL, '04231bda1afba19053e55279982d4d821acd5e9dbcd3adb26ffee1e9d5eea7e74ab4bb1bae148d629b0707c188f77911d313c86178dd0a929d668139e911fb1a27', NULL, -1, 1);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('6aabd3b0-9b33-4365-8d18-3a90bc9b0dc8', 30, '2022-11-29 06:14:32.725', NULL, false, false, '+6591872554', '048def1d9da15ed845dc337e4a2eee92bb812d6adfb0c00224400a87628e5f92a77e510b696cdfd8e2301bdb338e4b4fc0e6b8fd58f8b77ccf0ca239c77f242dfa', '0x07bfddc3f95d4fe3b4c9a8f86365703e524a200aab5748997374e57afa02f7bd', 24074, 1);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('9831ec28-ee7d-4eca-bb34-d413f946d2b3', 20, '2022-11-30 13:58:00.692', NULL, false, false, '+6512341234', '048d5ae6810cf5e91754554cffadf8b6c273503c76966c6b00236752fa6eff9dca54200d9c929ddcdcd6312818d2902ab365fd339bb76f48ba60a6a02287a7859b', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('e6ef808b-c2b5-4a87-ad7f-358b1c1adfbc', 30, '2022-11-30 02:13:41.02', 'mengleionline@hotmail.com', true, true, '+6594564688', '04445ebf9e01d8fdc912d8e632f1a45bbee6efb969c26052f9eb0fed43e81ac1a7ecffdb29cd49616b3c2154611e4408706e993a5501f947e8c9ed7435e33200e9', '0x03d2f01c311b1e1c7cef4c5f31b4b6ae1691c79cdfffebf780a2a371402386f7', 24075, 1);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('c36a86a1-cd9f-42fa-832a-0c8a25f3b097', 20, '2022-12-02 04:12:55.581', NULL, false, false, '+6587689235', '04c11c522b7584fa509db19a8359d085d3b20ef39d27b6801c8bbd1b77e5c915765aba1749b007b8190340571cfa3aadb9c12eb820c12deb5d2e3a1af160781fe5', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('a5fbbd6b-c76b-442f-9770-a8f5219b78e1', 20, '2022-12-06 05:17:46.434', NULL, false, false, '+6523232323', '0411cc76d93a4663473bfbc524f28433331075cd6f2b05b24d2ce95e044293a412408c144922f4656774d71e74f35d21e2499cbc1228d6eea6de69172589c3c782', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('0e51dd38-b24a-4aaf-9898-6fde764ca82d', 20, '2022-12-06 06:18:24.693', NULL, false, false, '+6566243896', '041fc5084e96fb818de6796aeb68074f987aaac200bed452092d89e28513a2686a7c168ac30037eadf3a80d921a315d54133508d99e76385f9e8e53519d59b4b19', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('c11b3ae3-de3d-464f-967f-dc815501d951', 20, '2022-12-06 09:58:16.872', NULL, false, false, '+6566913832', '0436537371d6ad77d1d18b21f3fd6d8ea9a14d5f7b2236d6f3381f5733714b7d717b60a128b5867c1685d91aca38be23d4a4d838f1219405135982672d6ce30b16', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('64b3d8c0-86fc-4bf0-91ac-90a6ec27687a', 20, '2022-12-09 02:42:18.975', NULL, false, false, NULL, '04ba2d99909ec0ae11ac516f7baa87aacbdd7fabaacbe30e1e24ad72aca7e7b00c5b9d70a94bbd20459a062c79be105736a87750649e3577981a3af6352c13719e', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('4f676490-0b66-4ae5-9819-72e4b45fbbaf', 20, '2022-12-12 03:25:24.457', NULL, false, false, NULL, '04f59c974ace1dcf59ac625f583c12371a1abce8a48473717190507e4d4a7e0347973198e5c5b480b067c6e93f24106d4958d2bd198b848731b8c507150279d5dd', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('472099c5-0b38-4316-9477-a8e53868b7b3', 20, '2022-12-13 06:52:43.484', NULL, false, false, NULL, '04dde529643dd943f4ad0158da2541dce73d959d2a7c591abdf5b922ab5c54aa5ca90ce881e4cc70b3e29d16ab75ff23406f6d25e13e1559ceffd056e9c898b62e', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('66b0caad-04d1-44ed-a3b0-70a54d6aa3c4', 20, '2022-12-02 04:21:21.83', NULL, false, false, NULL, '04ef012bb7a0ea0ba9a2a4addd0508c91a57aaadc2fb5f06c3a36fcb9070087d71b9b208f3448ff8a0391fac3c721dfd76f496bf23ba4286b6ae4ead7c35b5778d', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('5990f2a2-ecf9-40db-9ccf-1d66d27b4ee5', 20, '2022-12-15 10:09:27.525', NULL, false, false, '+6512345678', '046000c599b4e4719611fbe4de94988d77df729ba370bded54953c328ee0ea8a92ca3828973731ec9b502829bd78c6f8838a9b41d9056762b46aaab1e6ae7b8a75', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('a919a3af-bcf3-4dc0-a0e1-7cb625ab778d', 20, '2022-12-02 06:17:49.583', NULL, false, false, NULL, '04926b4a203c599a421c4ce37930fd3d4194dfa2696157bfa74d6ef8fe7449f01676de1442302f02afa0c63974557312c107ccc841401651e83175c2380513c8ec', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('1f639c8b-e134-47e0-a701-04f88fa38c63', 20, '2022-12-13 12:52:59.781', NULL, false, false, NULL, '04c926332dae791eaa8eef6a1ef6dbb219059db50288681bd2e86e1d6486d0d92f47b204b7169f5508d9a7f661c2aa2a1b4dde9b3cee58aea6b1b6d0f2374ebf3c', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('9b0680cb-529f-4808-929f-a768c59b4ce0', 20, '2022-12-13 13:55:29.499', NULL, false, false, '+6583308124', '04336a04a026c50e68b342efd30fbb6583de82ec5a5e0738cb31ce9bfe3e082a83b4da2c60f2beb3893b968039c7d6aaa6e606b24075a8ba15b22bfe0ee770c796', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('37f1589c-7f9c-4af0-b792-811e6f10c547', 20, '2022-12-15 10:59:26.552', NULL, false, false, '+6583300812', '046864f36799190d235c427ad3b7d36ffd7f7a9471affac4d7196ebda1bbd2608411b36a3c22d62afa12a85b2b94a2b1408415dce9096afd3d379772138d7ac742', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('3ec905f0-f4c9-45c8-81ef-cedb99d9d9b8', 20, '2022-12-16 04:39:51.134', NULL, false, false, '+6566381465', '041d958e3477c0c0f4248d461be654766ec9823beb8011ad8d8ea26611c7f833b110137394ae33abb85f135837de9770803015cd5224bec2304b0d55ee31a128fe', NULL, -1, NULL);
+INSERT INTO public.person (id, account_state, created_at, email, has_made_payment, has_topped_up, phone_number, public_key, stark_pub_key, vault_id, myinfo_id) VALUES ('b6123fe8-c4b3-4edc-b9a0-33fd613d5d45', 30, '2022-11-30 05:40:45.324', 'princiedev@gmail.com', true, true, '+6597544888', '0433be1598857ee2bf82c83dca9ef8ae7aa9d2f4c5e4ad82bc4722002fc81d04a996100aecc4e40fe25fa2906cee059dd5d7c72e3b320a3dd5de9d3dbad22f5584', '0x079ecf3550dae1e4a0e0d10fa59f106a43eccd6ebdc6c1eaf8bbb21c2faa575f', 24076, NULL);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

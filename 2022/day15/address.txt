@@ -1,0 +1,29 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.7
+-- Dumped by pg_dump version 14.5 (Homebrew)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: dbadmin
+--
+
+INSERT INTO public.address (id, country, description, postal_code, street_first, street_second) VALUES ('94245dc9-13cf-438f-b836-3e33b8b10fac', 'Singapore', '', '828761', '83 Punggol Central', '');
+
+
+--
+-- PostgreSQL database dump complete
+--
+
